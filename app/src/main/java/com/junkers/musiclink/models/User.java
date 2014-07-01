@@ -1,25 +1,40 @@
 package com.junkers.musiclink.models;
 
 public class User {
-    private String firstName;
-    private String lastName;
+    public static final String CACHED_KEY = "CACHED_USER";
+
+    private String mFirstName;
+    private String mLastName;
+    private String mToken;
 
     public User() {
     }
 
     public String getFirstName() {
-        return firstName;
+        return mFirstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        mFirstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return mLastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        mLastName = lastName;
+    }
+
+    public String getToken() {
+        return mToken;
+    }
+
+    public void setToken(String token) {
+        mToken = token;
+    }
+
+    public boolean hasToken() {
+        return mToken != null && !mToken.isEmpty();
     }
 }

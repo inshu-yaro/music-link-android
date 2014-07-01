@@ -1,32 +1,35 @@
 package com.junkers.musiclink.ui;
 
-import android.app.Activity;
-
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
 
+import com.google.inject.Inject;
 import com.junkers.musiclink.R;
+import com.junkers.musiclink.adapters.CacheAdapter;
+import com.junkers.musiclink.models.User;
+
+import roboguice.activity.RoboActivity;
 
 
-public class PlayerActivity extends Activity
+public class PlayerActivity extends RoboActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    @Inject private CacheAdapter cacheAdapter;
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
+    private User user;
+
+    private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
 
     @Override
@@ -34,14 +37,30 @@ public class PlayerActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
+        user = cacheAdapter.loadCachedUser();
+
+        if (user == null || !user.hasToken()) {
+            launchLoginActivity();
+        }
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    private void launchLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, LoginActivity.REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("foo", "returned " + resultCode);
+
     }
 
     @Override
