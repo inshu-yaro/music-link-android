@@ -20,4 +20,11 @@ public class SharedPrefCacheAdapter implements CacheAdapter {
         }
         return mGson.fromJson(userJson, User.class);
     }
+
+    public void cacheUser(User user) {
+        String serializedUser = mGson.toJson(user);
+        mSharedPreferences.edit()
+                .putString(User.CACHED_KEY, serializedUser)
+                .commit();
+    }
 }

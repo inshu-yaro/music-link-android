@@ -1,18 +1,23 @@
 package com.junkers.musiclink.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.facebook.Session;
-import com.facebook.SessionState;
+import com.google.inject.Inject;
 import com.junkers.musiclink.R;
+import com.junkers.musiclink.common.Callback;
+import com.junkers.musiclink.managers.UserManager;
+import com.junkers.musiclink.models.User;
 
-public class LoginActivity extends Activity {
+import roboguice.activity.RoboActivity;
+
+public class LoginActivity extends RoboActivity {
     public static final int REQUEST_CODE = 1;
+
+    @Inject private UserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +26,16 @@ public class LoginActivity extends Activity {
     }
 
     public void handleLoginButtonClick(View v) {
-        Session.openActiveSession(this, true, new Session.StatusCallback() {
+        userManager.login(this, new Callback<User>() {
             @Override
-            public void call(Session session, SessionState state, Exception exception) {
+            public void onSuccess(User user) {
+                setResult(RESULT_OK);
+                finish();
+            }
 
+            @Override
+            public void onFailure() {
+                Toast.makeText(LoginActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -33,24 +44,5 @@ public class LoginActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

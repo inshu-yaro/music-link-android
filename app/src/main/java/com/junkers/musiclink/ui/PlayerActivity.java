@@ -7,7 +7,6 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +26,7 @@ public class PlayerActivity extends RoboActivity
 
     @Inject private CacheAdapter cacheAdapter;
 
-    private User user;
+    private User mUser;
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -37,9 +36,9 @@ public class PlayerActivity extends RoboActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-        user = cacheAdapter.loadCachedUser();
+        mUser = cacheAdapter.loadCachedUser();
 
-        if (user == null || !user.hasToken()) {
+        if (mUser == null || !mUser.hasToken()) {
             launchLoginActivity();
         }
 
@@ -59,13 +58,13 @@ public class PlayerActivity extends RoboActivity
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("foo", "returned " + resultCode);
-
+        if (resultCode != RESULT_OK) {
+            finish();
+        }
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))

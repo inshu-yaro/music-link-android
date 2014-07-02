@@ -19,5 +19,6 @@
     <string name="catch_phrase">音楽から始まる出会い。</string>
     <string name="top_explanation">あなたの再生した曲から、共通の趣味嗜好の合う人をマッチングします。</string>
     <string name="submit">送信</string>
+    <string name="login_failed">ログインが失敗しました。</string>
 
 </resources>
