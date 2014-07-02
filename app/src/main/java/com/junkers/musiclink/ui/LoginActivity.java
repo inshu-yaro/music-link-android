@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.facebook.Session;
+import com.facebook.SessionState;
 import com.junkers.musiclink.R;
 
 public class LoginActivity extends Activity {
@@ -19,9 +20,13 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
     }
 
-
     public void handleLoginButtonClick(View v) {
+        Session.openActiveSession(this, true, new Session.StatusCallback() {
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
 
+            }
+        });
     }
 
     @Override
