@@ -14,16 +14,17 @@ import com.junkers.musiclink.adapters.CacheAdapter;
 import com.junkers.musiclink.models.User;
 
 import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectFragment;
+import roboguice.inject.InjectView;
 
 
 public class MainActivity extends RoboActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     @Inject private CacheAdapter cacheAdapter;
+    @InjectFragment(R.id.navigation_drawer) private NavigationDrawerFragment mNavigationDrawerFragment;
+    @InjectView(R.id.drawer_layout) private DrawerLayout mDrawerLayout;
 
-    private User mUser;
-
-    private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
 
     @Override
@@ -31,19 +32,15 @@ public class MainActivity extends RoboActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mUser = cacheAdapter.loadCachedUser();
+        User user = cacheAdapter.loadCachedUser();
 
-        if (mUser == null || !mUser.hasToken()) {
+        if (user == null || !user.hasToken()) {
             launchLoginActivity();
         }
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, mDrawerLayout);
     }
 
     private void launchLoginActivity() {

@@ -3,34 +3,38 @@ package com.junkers.musiclink.models;
 import java.util.List;
 
 public class Artist {
-    private String name;
-    private List<Album> albums;
-    private List<Song> songs;
+    private String mName;
+    private List<Album> mAlbums;
+    private List<Song> mSongs;
 
     public Artist() {
     }
 
+    public Artist(String name) {
+        mName = name;
+    }
+
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        mName = name;
     }
 
     public List<Album> getAlbums() {
-        return albums;
+        return mAlbums;
     }
 
     public void setAlbums(List<Album> albums) {
-        this.albums = albums;
+        mAlbums = albums;
     }
 
     public List<Song> getSongs() {
-        return songs;
+        return mSongs;
     }
 
     public void setSongs(List<Song> songs) {
-        this.songs = songs;
+        mSongs = songs;
     }
 }
