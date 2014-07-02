@@ -1,4 +1,4 @@
-package com.junkers.musiclink.ui;
+package com.junkers.musiclink.app;
 
 import android.content.Intent;
 import android.os.Bundle;

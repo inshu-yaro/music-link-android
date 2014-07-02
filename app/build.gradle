@@ -25,7 +25,8 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.6.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile 'org.roboguice:roboguice:2.0'
+    compile 'org.roboguice:roboguice:3.0-alpha-2'
+    //compile 'org.roboguice:roboguice:2.0'
     compile 'joda-time:joda-time:2.3'
     compile project(':facebook')
 }
