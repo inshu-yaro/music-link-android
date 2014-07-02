@@ -15,7 +15,6 @@ public class MusicLinkAdapterProvider implements Provider<MusicLinkAdapter> {
 
     @Override
     public MusicLinkAdapter get() {
-
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(mSettings.getProperty("endpoint"))
                 .setConverter(new GsonConverter(mGson))

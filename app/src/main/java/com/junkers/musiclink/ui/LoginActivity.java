@@ -1,9 +1,13 @@
 package com.junkers.musiclink.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.facebook.Session;
 import com.junkers.musiclink.R;
 
 public class LoginActivity extends Activity {
@@ -15,6 +19,16 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
     }
 
+
+    public void handleLoginButtonClick(View v) {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
