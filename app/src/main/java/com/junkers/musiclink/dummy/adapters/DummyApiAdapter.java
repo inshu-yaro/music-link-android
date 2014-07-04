@@ -1,5 +1,6 @@
-package com.junkers.musiclink.adapters;
+package com.junkers.musiclink.dummy.adapters;
 
+import com.junkers.musiclink.adapters.ApiAdapter;
 import com.junkers.musiclink.models.User;
 
 import retrofit.Callback;

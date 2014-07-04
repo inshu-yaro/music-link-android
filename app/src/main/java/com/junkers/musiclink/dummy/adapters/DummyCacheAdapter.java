@@ -1,14 +1,15 @@
-package com.junkers.musiclink.adapters;
+package com.junkers.musiclink.dummy.adapters;
 
+import com.junkers.musiclink.adapters.CacheAdapter;
 import com.junkers.musiclink.models.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryCacheAdapter implements CacheAdapter {
+public class DummyCacheAdapter implements CacheAdapter {
     private Map<String, Object> cachedItems;
 
-    public InMemoryCacheAdapter() {
+    public DummyCacheAdapter() {
         cachedItems = new HashMap<String, Object>();
     }
 

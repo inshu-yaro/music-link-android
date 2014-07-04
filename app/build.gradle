@@ -15,6 +15,11 @@ android {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            resValue "string", "environment", "production"
+        }
+        debug {
+            resValue "string", "environment", "development"
         }
     }
 }
