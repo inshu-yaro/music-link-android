@@ -1,16 +1,20 @@
 package com.junkers.musiclink.models;
 
 public class Song {
-    private String title;
+    private String mTitle;
 
     public Song() {
     }
 
+    public Song(String title) {
+        mTitle = title;
+    }
+
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        mTitle = title;
     }
 }

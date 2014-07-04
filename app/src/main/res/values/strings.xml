@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">Music Link</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="artists_section">Artists</string>
+    <string name="albums_section">Albums</string>
+    <string name="songs_section">Songs</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
