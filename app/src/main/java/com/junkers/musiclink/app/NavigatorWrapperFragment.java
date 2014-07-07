@@ -25,10 +25,13 @@ public class NavigatorWrapperFragment extends RoboFragment {
     @InjectView(R.id.player_navigation) private TabPageIndicator mTabPageIndicator;
     @InjectView(R.id.player_pager) private ViewPager mViewPager;
 
+    private PageChangeListener mPageChangeListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_navigator_wrapper, container, false);
+        mPageChangeListener = new PageChangeListener();
         return rootView;
     }
 
@@ -37,26 +40,54 @@ public class NavigatorWrapperFragment extends RoboFragment {
         super.onViewCreated(view, savedInstanceState);
         mViewPager.setAdapter(mTitlePagerAdapter);
         mTabPageIndicator.setViewPager(mViewPager);
+        mTabPageIndicator.setOnPageChangeListener(mPageChangeListener);
     }
 
-    private void setPagerBundle(String key, Object object) {
-        Bundle bundle = new Bundle();
-        bundle.putString(NavigatorFragment.ARTIST_KEY, mGson.toJson(object));
-        mTitlePagerAdapter.setBundle(bundle);
+    private NavigatorFragment getCurrentFragment() {
+        return mTitlePagerAdapter.getFragment(mViewPager.getCurrentItem());
     }
 
     public void showArtistSongs(Artist artist) {
-        setPagerBundle(NavigatorFragment.ARTIST_KEY, mGson.toJson(artist));
+        mPageChangeListener.mArtist = artist;
         mViewPager.setCurrentItem(ModelType.SONG.getPosition());
     }
 
     public void showArtistAlbums(Artist artist) {
-        setPagerBundle(NavigatorFragment.ARTIST_KEY, mGson.toJson(artist));
+        mPageChangeListener.mArtist = artist;
         mViewPager.setCurrentItem(ModelType.ALBUM.getPosition());
     }
 
     public void showAlbumSongs(Album album) {
-        setPagerBundle(NavigatorFragment.ALBUM_KEY, mGson.toJson(album));
+        mPageChangeListener.mAlbum = album;
         mViewPager.setCurrentItem(ModelType.SONG.getPosition());
+    }
+
+    private class PageChangeListener implements ViewPager.OnPageChangeListener {
+        private Album mAlbum;
+        private Artist mArtist;
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            NavigatorFragment fragment = mTitlePagerAdapter.getFragment(position);
+            if (mAlbum != null)
+                fragment.refreshList(mAlbum);
+            else if (mArtist != null)
+                fragment.refreshList(mArtist);
+            else
+                fragment.refreshList();
+
+            mArtist = null;
+            mAlbum = null;
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
     }
 }

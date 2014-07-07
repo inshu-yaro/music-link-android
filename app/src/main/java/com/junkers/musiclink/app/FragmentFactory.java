@@ -13,8 +13,9 @@ public final class FragmentFactory {
     private @Inject Activity mActivity;
 
 
-    public Fragment createNavigatorFragment(int position, Bundle arguments) {
-        Fragment fragment = new NavigatorFragment();
+    public NavigatorFragment createNavigatorFragment(int position) {
+        NavigatorFragment fragment = new NavigatorFragment();
+        Bundle arguments = new Bundle();
         switch (position) {
             case 0:
                 arguments.putString(NavigatorFragment.MODEL_TYPE_KEY, ModelType.ARTIST.toString());
@@ -28,6 +29,7 @@ public final class FragmentFactory {
             default:
                 throw new IllegalArgumentException("No view for position " + position);
         }
+        fragment.setArguments(arguments);
 
         return fragment;
     }

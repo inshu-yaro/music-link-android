@@ -40,7 +40,7 @@ public class DummyQueryAdapter implements QueryAdapter {
 
     @Override
     public List<Album> getArtistAlbums(Artist artist) {
-        return albumsList;
+        return albumsList.subList(1, 3);
     }
 
     @Override
@@ -50,11 +50,11 @@ public class DummyQueryAdapter implements QueryAdapter {
 
     @Override
     public List<Song> getAlbumSongs(Album album) {
-        return songsList;
+        return songsList.subList(1, 3);
     }
 
     @Override
     public List<Song> getArtistSongs(Artist artist) {
-        return songsList;
+        return songsList.subList(2, 4);
     }
 }
