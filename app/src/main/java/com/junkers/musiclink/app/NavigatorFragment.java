@@ -30,36 +30,26 @@ public class NavigatorFragment extends RoboFragment {
     @Inject private Gson mGson;
 
     @InjectView(R.id.player_list_view) private ListView mPlayerListView;
-
+    private NavigatorWrapperFragment mNavigatorWrapperFragment;
 
     private ModelType mModelType = ModelType.ARTIST;
     private Album mAlbum;
     private Artist mArtist;
 
-    private void setUpModel() {
-        if (getArguments() == null) {
-            return;
-        }
-        mModelType = ModelType.valueOf(getArguments().getString(MODEL_TYPE_KEY, ModelType.ARTIST.toString()));
-        if (getArguments().containsKey(ALBUM_KEY)) {
-            mAlbum = mGson.fromJson(getArguments().getString(ALBUM_KEY), Album.class);
-        }
-        if (getArguments().containsKey(ARTIST_KEY)) {
-            mArtist = mGson.fromJson(getArguments().getString(ARTIST_KEY), Artist.class);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_navigator, container, false);
-        setUpModel();
         return rootView;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mNavigatorWrapperFragment = (NavigatorWrapperFragment)getFragmentManager().findFragmentById(R.id.container);
+        if (getArguments() != null && getArguments().containsKey(MODEL_TYPE_KEY)) {
+            mModelType = ModelType.valueOf(getArguments().getString(MODEL_TYPE_KEY));
+        }
         mPlayerListView.setAdapter(getAdapter());
     }
 
@@ -68,15 +58,14 @@ public class NavigatorFragment extends RoboFragment {
         switch (mModelType) {
             case ARTIST:
                 return new ArtistAdapter(
-                        getActivity(), R.layout.artist_row_view, mQueryAdapter.getArtists());
+                        getActivity(), R.layout.artist_row_view, mQueryAdapter.getArtists(), mNavigatorWrapperFragment);
             case ALBUM:
                 return new AlbumAdapter(
-                        getActivity(), R.layout.artist_row_view, mQueryAdapter.getAlbums());
+                        getActivity(), R.layout.artist_row_view, mQueryAdapter.getAlbums(), mNavigatorWrapperFragment);
             case SONG:
                 return new SongAdapter(
                         getActivity(), R.layout.artist_row_view, mQueryAdapter.getSongs());
             default: return null;
         }
     }
-
 }
