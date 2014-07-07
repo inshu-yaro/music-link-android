@@ -21,4 +21,10 @@
     <string name="submit">送信</string>
     <string name="login_failed">ログインが失敗しました。</string>
 
+    <string-array name="player_navigation">
+        <item>@string/artists_section</item>
+        <item>@string/albums_section</item>
+        <item>@string/songs_section</item>
+    </string-array>
+
 </resources>

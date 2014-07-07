@@ -22,6 +22,8 @@ public class MainActivity extends RoboActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     @Inject private CacheAdapter cacheAdapter;
+    @Inject private FragmentFactory mFragmentFactory;
+
     @InjectFragment(R.id.navigation_drawer) private NavigationDrawerFragment mNavigationDrawerFragment;
     @InjectView(R.id.drawer_layout) private DrawerLayout mDrawerLayout;
 
@@ -59,13 +61,13 @@ public class MainActivity extends RoboActivity
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, FragmentFactory.createForPosition(position + 1))
+                .replace(R.id.container, mFragmentFactory.createMainFragment(position))
                 .commit();
     }
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
