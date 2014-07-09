@@ -16,6 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// FIXME: Album/Artist name with ' character
+// TODO: Factorize duplicated code
 public class DefaultQueryAdapter implements QueryAdapter {
     @Inject private Context mContext;
 
@@ -34,27 +36,57 @@ public class DefaultQueryAdapter implements QueryAdapter {
 
     @Override
     public List<Album> getAlbums() {
-        return new ArrayList<Album>();
+        return getArtistAlbums(null);
     }
 
     @Override
     public List<Album> getArtistAlbums(Artist artist) {
-        return new ArrayList<Album>();
+        String query = "";
+        if (artist != null)
+            query += MediaStore.Audio.AudioColumns.ARTIST + " = '" + artist.getName() + "'";
+        Cursor cursor = getSDMusicCursor(query);
+        Set<Album> albums= new HashSet<Album>();
+        while (cursor.moveToNext()) {
+            String albumName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM));
+            albums.add(new Album(albumName));
+        }
+        List<Album> result = new ArrayList<Album>(albums);
+        Collections.sort(result);
+        return result;
     }
 
     @Override
     public List<Song> getSongs() {
-        return new ArrayList<Song>();
+        return getSongs(null, null);
     }
 
     @Override
     public List<Song> getAlbumSongs(Album album) {
-        return new ArrayList<Song>();
+        return getSongs(null, album);
     }
 
     @Override
     public List<Song> getArtistSongs(Artist artist) {
-        return new ArrayList<Song>();
+        return getSongs(artist, null);
+    }
+
+    private List<Song> getSongs(Artist artist, Album album) {
+        String query = "";
+        if (artist != null)
+            query += MediaStore.Audio.AudioColumns.ARTIST + " = '" + artist.getName() + "'";
+        if (album != null) {
+            if (artist != null)
+                query += " AND ";
+            query += MediaStore.Audio.AudioColumns.ALBUM + " = '" + album.getTitle() + "'";
+        }
+        Cursor cursor = getSDMusicCursor(query);
+        List<Song> songs = new ArrayList<Song>();
+        while (cursor.moveToNext()) {
+            String songName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.TITLE));
+            songs.add(new Song(songName));
+        }
+        Collections.sort(songs);
+        return songs;
     }
 
     private Cursor getSDMusicCursor() {

@@ -1,9 +1,8 @@
 package com.junkers.musiclink.models;
 
-import java.util.Comparator;
 import java.util.List;
 
-public class Artist implements Comparable {
+public class Artist implements Comparable<Artist> {
     private String mName;
     private List<Album> mAlbums;
     private List<Song> mSongs;
@@ -46,7 +45,7 @@ public class Artist implements Comparable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || ((Object)this).getClass() != o.getClass()) return false;
 
         Artist artist = (Artist) o;
 
@@ -61,9 +60,7 @@ public class Artist implements Comparable {
     }
 
     @Override
-    public int compareTo(Object another) {
-        if (getClass() !=  another.getClass())
-            return -1;
-        return normalizedName().compareTo(((Artist)another).normalizedName());
+    public int compareTo(Artist another) {
+        return normalizedName().compareTo(another.normalizedName());
     }
 }
