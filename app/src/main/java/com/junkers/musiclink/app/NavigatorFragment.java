@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -74,8 +75,10 @@ public class NavigatorFragment extends RoboFragment {
     }
 
     private void refreshAdapter() {
-        if (mQueryAdapter != null)
-            mPlayerListView.setAdapter(getAdapter());
+        if (mQueryAdapter != null) {
+            ListAdapter adapter = getAdapter();
+            mPlayerListView.setAdapter(adapter);
+        }
     }
 
     public void refreshList() {

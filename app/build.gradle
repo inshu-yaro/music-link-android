@@ -19,8 +19,8 @@ android {
             resValue "string", "environment", "production"
         }
         debug {
-            resValue "string", "environment", "development"
-//            resValue "string", "environment", "production"
+//            resValue "string", "environment", "development"
+            resValue "string", "environment", "production"
         }
     }
 }
