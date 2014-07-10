@@ -11,14 +11,14 @@ import android.view.MenuItem;
 import com.google.inject.Inject;
 import com.junkers.musiclink.R;
 import com.junkers.musiclink.adapters.CacheAdapter;
+import com.junkers.musiclink.app.base.BaseActivity;
 import com.junkers.musiclink.models.User;
 
-import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectFragment;
 import roboguice.inject.InjectView;
 
 
-public class MainActivity extends RoboActivity
+public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     @Inject private CacheAdapter cacheAdapter;

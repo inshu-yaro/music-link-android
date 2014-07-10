@@ -19,8 +19,8 @@ android {
             resValue "string", "environment", "production"
         }
         debug {
-//            resValue "string", "environment", "development"
-            resValue "string", "environment", "production"
+            resValue "string", "environment", "development"
+//            resValue "string", "environment", "production"
         }
     }
 }
@@ -34,7 +34,8 @@ dependencies {
     compile 'org.roboguice:roboguice:3.0-alpha-2'
     compile 'joda-time:joda-time:2.3'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
-    compile ('com.facebook:facebook-android-sdk:+@aar') {
-        transitive = true
-    }
+    compile 'com.github.tony19:logback-android-core:1.1.1-2'
+    compile 'com.github.tony19:logback-android-classic:1.1.1-2'
+    compile 'org.slf4j:slf4j-api:1.7.6'
+    compile ('com.facebook:facebook-android-sdk:+@aar') { transitive = true }
 }

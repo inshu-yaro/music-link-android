@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.junkers.musiclink.R;
 import com.junkers.musiclink.adapters.QueryAdapter;
+import com.junkers.musiclink.app.base.BaseFragment;
 import com.junkers.musiclink.models.Album;
 import com.junkers.musiclink.models.Artist;
 import com.junkers.musiclink.models.ModelType;
@@ -22,10 +23,9 @@ import com.junkers.musiclink.widgets.SongAdapter;
 
 import java.util.List;
 
-import roboguice.fragment.provided.RoboFragment;
 import roboguice.inject.InjectView;
 
-public class NavigatorFragment extends RoboFragment {
+public class NavigatorFragment extends BaseFragment {
     public static final String MODEL_TYPE_KEY = "model_type";
     public static final String ALBUM_KEY = "album";
     public static final String ARTIST_KEY = "artist";
@@ -39,7 +39,6 @@ public class NavigatorFragment extends RoboFragment {
     private ModelType mModelType = ModelType.ARTIST;
     private Album mAlbum;
     private Artist mArtist;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
