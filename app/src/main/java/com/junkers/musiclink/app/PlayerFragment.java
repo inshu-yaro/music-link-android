@@ -12,11 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.junkers.musiclink.R;
+import com.junkers.musiclink.app.base.BaseFragment;
 import com.junkers.musiclink.services.MusicPlayerService;
 
-import roboguice.fragment.RoboFragment;
-
-public class PlayerFragment extends RoboFragment {
+public class PlayerFragment extends BaseFragment {
     private boolean mBound = false;
     private MusicPlayerService mPlayerService;
 

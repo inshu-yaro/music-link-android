@@ -9,12 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DummyQueryAdapter implements QueryAdapter {
-    private List<Song> songsList = Arrays.asList(
-            new Song("abc"), new Song("def"), new Song("ghi"),
-            new Song("jkl"), new Song("mno"), new Song("pqr"),
-            new Song("stu"), new Song("vwx"), new Song("yz0"),
-            new Song("123"), new Song("456"), new Song("789")
-    );
+    private List<Song> songsList = getDummySongList();
 
     private List<Album> albumsList = Arrays.asList(
             new Album("stu"), new Album("vwx"), new Album("yz0"),
@@ -56,5 +51,17 @@ public class DummyQueryAdapter implements QueryAdapter {
     @Override
     public List<Song> getArtistSongs(Artist artist) {
         return songsList.subList(2, 4);
+    }
+
+    private List<Song> getDummySongList() {
+        List<Song> songs = Arrays.asList(
+            new Song("abc"), new Song("def"), new Song("ghi"),
+            new Song("jkl"), new Song("mno"), new Song("pqr"),
+            new Song("stu"), new Song("vwx"), new Song("yz0"),
+            new Song("123"), new Song("456"), new Song("789")
+        );
+        for (Song song : songs)
+            song.setArtist(new Artist(song.getTitle() + " artist"));
+        return songs;
     }
 }

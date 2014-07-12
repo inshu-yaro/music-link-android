@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/"
+        android:id="@+id/player_song_info_layout"
         android:layout_weight="7">
 
         <ImageView
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Demi Lovato"
-            android:id="@+id/song_name_text_view"
+            android:id="@+id/song_title_text_view"
             android:layout_below="@+id/artist_name_text_view"
             android:layout_centerHorizontal="true"
             android:textSize="8pt"/>
