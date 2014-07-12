@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/"
+        android:layout_weight="7">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/coverart"
+            android:maxHeight="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="106dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heart Attack"
+            android:id="@+id/artist_name_text_view"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:textSize="11pt"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Demi Lovato"
+            android:id="@+id/song_name_text_view"
+            android:layout_below="@+id/artist_name_text_view"
+            android:layout_centerHorizontal="true"
+            android:textSize="8pt"/>
+    </RelativeLayout>
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:name="com.junkers.musiclink.app.PlayerFragment"
+        android:id="@+id/fragment"
+        tools:layout="@layout/fragment_player_full"
+        android:layout_weight="1"/>
+</LinearLayout>
