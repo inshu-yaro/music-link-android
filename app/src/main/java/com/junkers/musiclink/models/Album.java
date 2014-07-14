@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Album implements Comparable<Album> {
     private String mTitle;
+    private Artist mArtist;
     private List<Song> mSongs;
 
     public Album() {
@@ -28,6 +29,14 @@ public class Album implements Comparable<Album> {
 
     public void setSongs(List<Song> songs) {
         mSongs = songs;
+    }
+
+    public Artist getArtist() {
+        return mArtist;
+    }
+
+    public void setArtist(Artist artist) {
+        mArtist = artist;
     }
 
     @Override

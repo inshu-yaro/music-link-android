@@ -3,6 +3,8 @@ package com.junkers.musiclink.models;
 public class Song implements Comparable<Song> {
     private String mTitle;
     private Artist mArtist;
+    private Album mAlbum;
+    private String mPath;
 
     public Song() {
     }
@@ -29,6 +31,22 @@ public class Song implements Comparable<Song> {
 
     public void setArtist(Artist artist) {
         mArtist = artist;
+    }
+
+    public Album getAlbum() {
+        return mAlbum;
+    }
+
+    public void setAlbum(Album album) {
+        mAlbum = album;
+    }
+
+    public String getPath() {
+        return mPath;
+    }
+
+    public void setPath(String path) {
+        mPath = path;
     }
 
     @Override

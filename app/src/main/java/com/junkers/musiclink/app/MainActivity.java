@@ -2,6 +2,7 @@ package com.junkers.musiclink.app;
 
 import android.app.ActionBar;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,8 @@ import com.junkers.musiclink.R;
 import com.junkers.musiclink.adapters.CacheAdapter;
 import com.junkers.musiclink.app.base.BaseActivity;
 import com.junkers.musiclink.models.User;
+import com.junkers.musiclink.services.MusicPlayerConnection;
+import com.junkers.musiclink.services.MusicPlayerService;
 
 import roboguice.inject.InjectFragment;
 import roboguice.inject.InjectView;
@@ -23,6 +26,7 @@ public class MainActivity extends BaseActivity
 
     @Inject private CacheAdapter cacheAdapter;
     @Inject private FragmentFactory mFragmentFactory;
+    @Inject private MusicPlayerConnection mPlayerConnection;
 
     @InjectFragment(R.id.navigation_drawer) private NavigationDrawerFragment mNavigationDrawerFragment;
     @InjectView(R.id.drawer_layout) private DrawerLayout mDrawerLayout;
@@ -43,6 +47,25 @@ public class MainActivity extends BaseActivity
         mTitle = getTitle();
 
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, mDrawerLayout);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!mPlayerConnection.isBound()) {
+            Intent intent = new Intent(getApplicationContext(), MusicPlayerService.class);
+            getApplicationContext().bindService(intent, mPlayerConnection, Context.BIND_AUTO_CREATE);
+            getApplicationContext().startService(intent);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mPlayerConnection.isBound()) {
+            mPlayerConnection.setBound(false);
+            getApplicationContext().unbindService(mPlayerConnection);
+        }
     }
 
     private void launchLoginActivity() {

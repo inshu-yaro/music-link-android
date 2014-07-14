@@ -4,4 +4,5 @@ import ch.qos.logback.classic.Logger;
 
 public interface LoggerFactory {
     Logger getLogger(Class<?> clazz);
+    Logger getLogger(Object obj);
 }

@@ -9,6 +9,8 @@ import com.google.inject.Inject;
 import com.junkers.musiclink.R;
 import com.junkers.musiclink.app.base.BaseActivity;
 import com.junkers.musiclink.models.Song;
+import com.junkers.musiclink.services.MusicPlayerConnection;
+import com.junkers.musiclink.services.MusicPlayerService;
 
 import roboguice.inject.InjectView;
 
@@ -17,7 +19,9 @@ public class PlayerActivity extends BaseActivity {
 
     @InjectView(R.id.artist_name_text_view) private TextView mArtistNameTextView;
     @InjectView(R.id.song_title_text_view) private TextView mSongTitleTextView;
+    @Inject private MusicPlayerConnection mPlayerConnection;
     @Inject private Gson mGson;
+    private MusicPlayerService mPlayerService;
     private Song song;
 
     @Override
@@ -28,6 +32,8 @@ public class PlayerActivity extends BaseActivity {
 
         song = mGson.fromJson(getIntent().getStringExtra(SONG_EXTRA_KEY), Song.class);
         displaySongInfo();
+        mPlayerService = mPlayerConnection.getPlayerService();
+        mPlayerService.playSong(song);
     }
 
     private void displaySongInfo() {

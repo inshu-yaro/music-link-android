@@ -48,7 +48,12 @@ public class DefaultQueryAdapter implements QueryAdapter {
         Set<Album> albums= new HashSet<Album>();
         while (cursor.moveToNext()) {
             String albumName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM));
-            albums.add(new Album(albumName));
+            Album album = new Album(albumName);
+            album.setArtist(artist);
+            if (artist == null)
+                album.setArtist(new Artist(cursor.getString(
+                        cursor.getColumnIndex(MediaStore.Audio.AudioColumns.ARTIST))));
+            albums.add(album);
         }
         List<Album> result = new ArrayList<Album>(albums);
         Collections.sort(result);
@@ -83,7 +88,13 @@ public class DefaultQueryAdapter implements QueryAdapter {
         List<Song> songs = new ArrayList<Song>();
         while (cursor.moveToNext()) {
             String songName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.TITLE));
-            songs.add(new Song(songName));
+            Song song = new Song(songName);
+            song.setAlbum(album);
+            song.setArtist(artist);
+            if (album != null && artist == null)
+                song.setArtist(album.getArtist());
+            song.setPath(cursor.getString(1));
+            songs.add(song);
         }
         Collections.sort(songs);
         return songs;

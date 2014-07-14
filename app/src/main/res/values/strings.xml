@@ -27,4 +27,6 @@
         <item>@string/songs_section</item>
     </string-array>
 
+    <string name="music_notification"></string>
+
 </resources>

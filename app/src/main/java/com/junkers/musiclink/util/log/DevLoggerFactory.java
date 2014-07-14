@@ -9,6 +9,11 @@ public class DevLoggerFactory extends BaseLoggerFactory {
     protected LogcatAppender mLogcatAppender = getLogcatAppender();
 
     @Override
+    public Logger getLogger(Object obj) {
+        return getLogger(obj.getClass());
+    }
+
+    @Override
     public Logger getLogger(Class<?> clazz) {
         Logger logger = (Logger)org.slf4j.LoggerFactory.getLogger(clazz.getName());
         logger.addAppender(mLogcatAppender);
