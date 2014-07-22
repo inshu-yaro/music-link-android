@@ -15,7 +15,7 @@ import com.junkers.musiclink.adapters.CacheAdapter;
 import com.junkers.musiclink.app.base.BaseActivity;
 import com.junkers.musiclink.models.User;
 import com.junkers.musiclink.services.MusicPlayerConnection;
-import com.junkers.musiclink.services.MusicPlayerService;
+import com.junkers.musiclink.services.MusicPlayerRemoteService;
 
 import roboguice.inject.InjectFragment;
 import roboguice.inject.InjectView;
@@ -44,18 +44,19 @@ public class MainActivity extends BaseActivity
             launchLoginActivity();
         }
 
+        startPlayerService();
+
         mTitle = getTitle();
 
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, mDrawerLayout);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void startPlayerService() {
         if (!mPlayerConnection.isBound()) {
-            Intent intent = new Intent(getApplicationContext(), MusicPlayerService.class);
+            log.debug("binding service");
+            Intent intent = new Intent(MusicPlayerRemoteService.class.getName());
+            startService(intent);
             getApplicationContext().bindService(intent, mPlayerConnection, Context.BIND_AUTO_CREATE);
-            getApplicationContext().startService(intent);
         }
     }
 

@@ -5,9 +5,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Binder;
 import android.os.IBinder;
+import android.os.RemoteException;
 
+import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.junkers.musiclink.R;
 import com.junkers.musiclink.app.MainActivity;
@@ -16,8 +17,8 @@ import com.junkers.musiclink.models.Song;
 import java.io.IOException;
 
 public class MusicPlayerService extends BaseService {
-    private final IBinder mBinder = new LocalBinder();
     @Inject private NotificationManager mNotificationManager;
+    @Inject private Gson mGson;
 
     private int NOTIFICATION = R.string.music_notification;
     private Song mCurrentSong;
@@ -63,11 +64,18 @@ public class MusicPlayerService extends BaseService {
         return mBinder;
     }
 
-    public class LocalBinder extends Binder {
-        public MusicPlayerService getService() {
-            return MusicPlayerService.this;
+    private final MusicPlayerRemoteService.Stub mBinder = new MusicPlayerRemoteService.Stub() {
+        @Override
+        public void playSong(String songJson) throws RemoteException {
+            MusicPlayerService.this.playSong(mGson.fromJson(songJson, Song.class));
         }
-    }
+    };
+
+//    public class LocalBinder extends Binder {
+//        public MusicPlayerService getService() {
+//            return MusicPlayerService.this;
+//        }
+//    }
 
     private void showNotification() {
         if (mCurrentSong == null)

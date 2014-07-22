@@ -12,7 +12,7 @@ import ch.qos.logback.classic.Logger;
 
 public class MusicPlayerConnection implements ServiceConnection {
     private boolean mBound = false;
-    private MusicPlayerService mPlayerService;
+    private MusicPlayerRemoteService mPlayerService;
     private Logger log;
 
     @Inject
@@ -22,14 +22,14 @@ public class MusicPlayerConnection implements ServiceConnection {
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-        MusicPlayerService.LocalBinder binder = (MusicPlayerService.LocalBinder) service;
-        mPlayerService = binder.getService();
+        mPlayerService = MusicPlayerRemoteService.Stub.asInterface(service);
         mBound = true;
         log.info("Music player service bound");
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
+        mPlayerService = null;
         mBound = false;
     }
 
@@ -41,7 +41,7 @@ public class MusicPlayerConnection implements ServiceConnection {
         mBound = bound;
     }
 
-    public MusicPlayerService getPlayerService() {
+    public MusicPlayerRemoteService getPlayerService() {
         return mPlayerService;
     }
 }

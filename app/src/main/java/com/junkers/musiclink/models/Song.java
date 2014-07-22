@@ -76,4 +76,5 @@ public class Song implements Comparable<Song> {
             return titleCmp;
         return getArtist().compareTo(another.getArtist());
     }
+
 }

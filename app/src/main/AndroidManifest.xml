@@ -37,7 +37,12 @@
 
         <service
             android:name=".services.MusicPlayerService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.junkers.musiclink.services.MusicPlayerRemoteService" />
+            </intent-filter>
+         </service>
 
     </application>
 

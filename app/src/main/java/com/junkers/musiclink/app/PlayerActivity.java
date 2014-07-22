@@ -2,6 +2,7 @@ package com.junkers.musiclink.app;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -10,7 +11,7 @@ import com.junkers.musiclink.R;
 import com.junkers.musiclink.app.base.BaseActivity;
 import com.junkers.musiclink.models.Song;
 import com.junkers.musiclink.services.MusicPlayerConnection;
-import com.junkers.musiclink.services.MusicPlayerService;
+import com.junkers.musiclink.services.MusicPlayerRemoteService;
 
 import roboguice.inject.InjectView;
 
@@ -21,7 +22,7 @@ public class PlayerActivity extends BaseActivity {
     @InjectView(R.id.song_title_text_view) private TextView mSongTitleTextView;
     @Inject private MusicPlayerConnection mPlayerConnection;
     @Inject private Gson mGson;
-    private MusicPlayerService mPlayerService;
+    private MusicPlayerRemoteService mPlayerService;
     private Song song;
 
     @Override
@@ -33,13 +34,18 @@ public class PlayerActivity extends BaseActivity {
         song = mGson.fromJson(getIntent().getStringExtra(SONG_EXTRA_KEY), Song.class);
         displaySongInfo();
         mPlayerService = mPlayerConnection.getPlayerService();
-        mPlayerService.playSong(song);
+        try {
+            mPlayerService.playSong(mGson.toJson(song));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private void displaySongInfo() {
         mArtistNameTextView.setText(song.getArtist().getName());
         mSongTitleTextView.setText(song.getTitle());
     }
+
 
     private void setupActionBar() {
         ActionBar actionBar = getActionBar();

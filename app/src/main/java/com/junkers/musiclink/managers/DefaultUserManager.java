@@ -12,6 +12,9 @@ import com.junkers.musiclink.adapters.ApiAdapter;
 import com.junkers.musiclink.adapters.CacheAdapter;
 import com.junkers.musiclink.common.Callback;
 import com.junkers.musiclink.models.User;
+import com.junkers.musiclink.util.log.LoggerFactory;
+
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +24,21 @@ import retrofit.RetrofitError;
 public class DefaultUserManager implements UserManager {
     @Inject protected ApiAdapter apiAdapter;
     @Inject protected CacheAdapter cacheAdapter;
+    private Logger log;
+
+    @Inject
+    public DefaultUserManager(LoggerFactory loggerFactory) {
+        log = loggerFactory.getLogger(getClass());
+    }
 
     @Override
     public void login(final Activity baseActivity, final Callback<User> callback) {
+        log.debug("try login");
         Session.openActiveSession(baseActivity, true, new Session.StatusCallback() {
             @Override
             public void call(Session session, SessionState state, Exception exception) {
                 if (exception != null) {
+                    log.error(exception.getMessage());
                     callback.onFailure();
                 }
                 if (session.isOpened()) {
@@ -63,6 +74,7 @@ public class DefaultUserManager implements UserManager {
 
             @Override
             public void failure(RetrofitError error) {
+                log.error("Could not save user to server");
                 callback.onFailure();
             }
         });
@@ -84,9 +96,11 @@ public class DefaultUserManager implements UserManager {
                 if (response.getError() == null) {
                     callback.onSuccess(User.fromGraphUser(user));
                 } else {
+                    log.error(response.getError().getErrorMessage());
                     callback.onFailure();
                 }
             }
         }).executeAsync();
     }
 }
+
