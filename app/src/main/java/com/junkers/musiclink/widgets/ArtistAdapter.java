@@ -10,7 +10,7 @@ import com.junkers.musiclink.models.Artist;
 
 import java.util.List;
 
-public class ArtistAdapter extends NavigatorAdapter<Artist> {
+public class ArtistAdapter extends BaseAdapter<Artist> {
 
     public ArtistAdapter(Context context, int resource, List<Artist> objects, NavigatorWrapperFragment wrapperFragment) {
         super(context, resource, objects, wrapperFragment);

@@ -14,20 +14,20 @@ import java.util.List;
 
 import roboguice.RoboGuice;
 
-public class NavigatorAdapter<T> extends ArrayAdapter<T> {
+public class BaseAdapter<T> extends ArrayAdapter<T> {
     @Inject protected LayoutInflater mLayoutInflater;
     protected NavigatorWrapperFragment mWrapperFragment;
     protected int mResource;
 
-    public NavigatorAdapter(Context context, int resource) {
+    public BaseAdapter(Context context, int resource) {
         this(context, resource, new ArrayList<T>());
     }
 
-    public NavigatorAdapter(Context context, int resource, List<T> objects) {
+    public BaseAdapter(Context context, int resource, List<T> objects) {
         this(context, resource, objects, null);
     }
 
-    public NavigatorAdapter(Context context, int resource, List<T> objects, NavigatorWrapperFragment wrapperFragment) {
+    public BaseAdapter(Context context, int resource, List<T> objects, NavigatorWrapperFragment wrapperFragment) {
         super(context, resource, objects);
         mResource = resource;
         RoboGuice.injectMembers(context, this);

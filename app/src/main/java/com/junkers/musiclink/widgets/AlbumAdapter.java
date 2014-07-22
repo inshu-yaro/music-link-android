@@ -10,7 +10,7 @@ import com.junkers.musiclink.models.Album;
 
 import java.util.List;
 
-public class AlbumAdapter extends NavigatorAdapter<Album> {
+public class AlbumAdapter extends BaseAdapter<Album> {
 
     public AlbumAdapter(Context context, int resource, List<Album> objects, NavigatorWrapperFragment wrapperFragment) {
         super(context, resource, objects, wrapperFragment);

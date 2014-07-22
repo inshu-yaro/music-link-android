@@ -14,7 +14,7 @@ import com.junkers.musiclink.models.Song;
 import java.util.List;
 
 
-public class SongAdapter extends NavigatorAdapter<Song> {
+public class SongAdapter extends BaseAdapter<Song> {
 
     @Inject private Gson mGson;
 
