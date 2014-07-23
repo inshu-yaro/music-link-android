@@ -36,12 +36,11 @@ public class DummyChatAdapter extends WebSocketClient implements ChatAdapter{
     @Inject
     public DummyChatAdapter(Settings settings) {
        super(settings.getAsUri("ws_endpoint"));
-       receiveDummyMessages();
     }
 
     @Override
     public void sendMessage(Message message) {
-
+        receiveDummyMessages();
     }
 
     @Override
@@ -67,7 +66,7 @@ public class DummyChatAdapter extends WebSocketClient implements ChatAdapter{
                onMessage(mGson.toJson(msg));
            }
        };
-      mTimer.schedule(mTimerTask,0, 5000);
+      mTimer.schedule(mTimerTask,5000, 10000);
     }
 
     @Override

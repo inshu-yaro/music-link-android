@@ -11,6 +11,14 @@ public class Message {
     private DateTime mDateTime;
     private User mUser;
 
+    public static Message getMessageObject(String messageText, DateTime dateTime, User user){
+        Message msg = new Message();
+        msg.setMessage(messageText);
+        msg.setDateTime(dateTime);
+        msg.setUser(user);
+        return msg;
+    }
+
     public String getMessage() {
         return mMessage;
     }

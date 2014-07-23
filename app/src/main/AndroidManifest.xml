@@ -31,6 +31,9 @@
             android:name=".app.PlayerActivity"
             android:parentActivityName=".app.MainActivity" />
 
+        <activity android:name=".app.ChatActivity"
+                  android:parentActivityName=".app.MainActivity"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
@@ -38,6 +41,9 @@
         <service
             android:name=".services.MusicPlayerService"
             android:enabled="true" />
+        
+        <service android:name=".services.ChatService"
+                 android:enabled="true"/>
 
     </application>
 

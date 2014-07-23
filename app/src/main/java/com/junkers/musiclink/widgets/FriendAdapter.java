@@ -36,9 +36,9 @@ public class FriendAdapter extends BaseAdapter<User> {
 
     @Override
     protected void onItemClick(User user) {
-        /*Intent intent = new Intent(getContext(), ChatActivity.class);
+        Intent intent = new Intent(getContext(), ChatActivity.class);
         intent.putExtra(ChatActivity.USER_EXTRA_KEY, mGson.toJson(user));
-        getContext().startActivity(intent);*/
+        getContext().startActivity(intent);
     }
 
 }
