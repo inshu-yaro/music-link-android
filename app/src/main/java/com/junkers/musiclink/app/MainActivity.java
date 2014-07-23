@@ -12,8 +12,11 @@ import android.view.MenuItem;
 import com.google.inject.Inject;
 import com.junkers.musiclink.R;
 import com.junkers.musiclink.adapters.CacheAdapter;
+import com.junkers.musiclink.adapters.ChatAdapter;
 import com.junkers.musiclink.app.base.BaseActivity;
 import com.junkers.musiclink.models.User;
+import com.junkers.musiclink.services.ChatConnection;
+import com.junkers.musiclink.services.ChatService;
 import com.junkers.musiclink.services.MusicPlayerConnection;
 import com.junkers.musiclink.services.MusicPlayerService;
 
@@ -27,6 +30,7 @@ public class MainActivity extends BaseActivity
     @Inject private CacheAdapter cacheAdapter;
     @Inject private FragmentFactory mFragmentFactory;
     @Inject private MusicPlayerConnection mPlayerConnection;
+    @Inject private ChatConnection mChatConnection;
 
     @InjectFragment(R.id.navigation_drawer) private NavigationDrawerFragment mNavigationDrawerFragment;
     @InjectView(R.id.drawer_layout) private DrawerLayout mDrawerLayout;
@@ -57,6 +61,11 @@ public class MainActivity extends BaseActivity
             getApplicationContext().bindService(intent, mPlayerConnection, Context.BIND_AUTO_CREATE);
             getApplicationContext().startService(intent);
         }
+        if(!mChatConnection.isBound()){
+            Intent intent = new Intent(getApplicationContext(), ChatService.class);
+            getApplicationContext().bindService(intent, mChatConnection, Context.BIND_AUTO_CREATE);
+            getApplicationContext().startService(intent);
+        }
     }
 
     @Override
@@ -65,6 +74,10 @@ public class MainActivity extends BaseActivity
         if (mPlayerConnection.isBound()) {
             mPlayerConnection.setBound(false);
             getApplicationContext().unbindService(mPlayerConnection);
+        }
+        if (mChatConnection.isBound()) {
+            mChatConnection.setBound(false);
+            getApplicationContext().unbindService(mChatConnection);
         }
     }
 

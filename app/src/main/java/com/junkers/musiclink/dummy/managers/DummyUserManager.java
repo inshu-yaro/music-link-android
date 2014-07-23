@@ -8,6 +8,9 @@ import com.junkers.musiclink.models.User;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DummyUserManager implements UserManager {
     private User getDummyUser() {
         User user = new User();
@@ -22,5 +25,15 @@ public class DummyUserManager implements UserManager {
     @Override
     public void login(Activity baseActivity, Callback<User> callback) {
         callback.onSuccess(getDummyUser());
+    }
+
+    @Override
+    public List<User> loadFriendsList() {
+        List<User> list = new ArrayList<User>();
+        for(int i=0; i<10; i++) {
+            list.add(getDummyUser());
+        }
+        return list;
+
     }
 }

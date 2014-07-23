@@ -38,6 +38,13 @@ public class DefaultUserManager implements UserManager {
         });
     }
 
+    @Override
+    public List<User> loadFriendsList() {
+        //unimplemented
+        List<User> list = new ArrayList<User>();
+        return list;
+    }
+
     private void loadUser(final Session session, final Callback<User> callback) {
         loadFromFacebook(session, new Callback<User>() {
             @Override

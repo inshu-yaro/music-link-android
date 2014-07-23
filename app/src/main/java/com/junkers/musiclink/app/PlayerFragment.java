@@ -21,6 +21,4 @@ public class PlayerFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_navigator, container, false);
         return rootView;
     }
-
-
 }

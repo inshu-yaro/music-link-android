@@ -38,6 +38,8 @@ public final class FragmentFactory {
         switch (position) {
             case 0:
                 return new NavigatorWrapperFragment();
+            case 1:
+                return new FriendsListFragment();
             default:
                 throw new IllegalArgumentException("No view for position " + position);
         }
