@@ -3,14 +3,16 @@ package com.junkers.musiclink.services;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.junkers.musiclink.R;
-import com.junkers.musiclink.app.MainActivity;
+import com.junkers.musiclink.app.PlayerActivity;
 import com.junkers.musiclink.models.Song;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.io.IOException;
 public class MusicPlayerService extends BaseService {
     private final IBinder mBinder = new LocalBinder();
     @Inject private NotificationManager mNotificationManager;
+    @Inject private Gson mGson;
 
     private int NOTIFICATION = R.string.music_notification;
     private Song mCurrentSong;
@@ -53,6 +56,14 @@ public class MusicPlayerService extends BaseService {
         showNotification();
     }
 
+    public void togglePause() {
+        if (mPlayer.isPlaying()) {
+            mPlayer.pause();
+        } else {
+            mPlayer.start();
+        }
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
@@ -72,10 +83,14 @@ public class MusicPlayerService extends BaseService {
     private void showNotification() {
         if (mCurrentSong == null)
             return;
-        CharSequence text = mCurrentSong.getTitle();
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+        Intent intent = new Intent(this, PlayerActivity.class);
+        intent.putExtra(PlayerActivity.SONG_EXTRA_KEY, mGson.toJson(mCurrentSong));
+        intent.putExtra(PlayerActivity.START_PLAYING_EXTRA_KEY, false);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(PlayerActivity.class);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent contentIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new Notification.Builder(getApplicationContext())
                 .setContentTitle(mCurrentSong.getTitle())
@@ -85,6 +100,6 @@ public class MusicPlayerService extends BaseService {
                 .build();
 
 
-        mNotificationManager.notify(NOTIFICATION, notification);
+        startForeground(NOTIFICATION, notification);
     }
 }

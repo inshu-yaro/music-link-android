@@ -10,7 +10,7 @@
     <ImageButton
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:id="@+id/imageButton"
+        android:id="@+id/repeat_button"
         android:src="@drawable/repeat"
         android:layout_weight="1"
         android:background="#00ffffff"/>
@@ -18,7 +18,7 @@
     <ImageButton
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:id="@+id/imageButton2"
+        android:id="@+id/previous_track_button"
         android:src="@drawable/rewind"
         android:layout_weight="1"
         android:background="#00ffffff"/>
@@ -26,7 +26,7 @@
     <ImageButton
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:id="@+id/imageButton3"
+        android:id="@+id/toggle_pause_button"
         android:src="@drawable/pause"
         android:layout_weight="1"
         android:background="#00ffffff"/>
@@ -34,7 +34,7 @@
     <ImageButton
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:id="@+id/imageButton4"
+        android:id="@+id/next_track_button"
         android:src="@drawable/foward_play"
         android:layout_weight="1"
         android:background="#00ffffff"/>
@@ -42,7 +42,7 @@
     <ImageButton
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:id="@+id/imageButton5"
+        android:id="@+id/shuffle_button"
         android:src="@drawable/shuffle"
         android:layout_weight="1"
         android:background="#00ffffff"/>
