@@ -1,5 +1,6 @@
 package com.junkers.musiclink.app;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,24 +18,32 @@ import roboguice.activity.RoboActivity;
 public class LoginActivity extends RoboActivity {
     public static final int REQUEST_CODE = 1;
 
-    @Inject private UserManager userManager;
+    @Inject private UserManager mUserManager;
+    private ProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_DARK);
+        mDialog.setMessage("Loading...");
+        mDialog.setCancelable(false);
     }
 
     public void handleLoginButtonClick(View v) {
-        userManager.login(this, new Callback<User>() {
+        mDialog.show();
+        mUserManager.login(this, new Callback<User>() {
             @Override
             public void onSuccess(User user) {
+                mDialog.dismiss();
                 setResult(RESULT_OK);
                 finish();
             }
 
             @Override
             public void onFailure() {
+                mDialog.hide();
                 Toast.makeText(LoginActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
             }
         });

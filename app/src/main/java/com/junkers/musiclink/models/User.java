@@ -12,6 +12,7 @@ public class User {
     private String mFirstName;
     private String mLastName;
     private String mToken;
+    private String mEmail;
     private DateTime mBirthday;
 
     public User() {
@@ -68,5 +69,13 @@ public class User {
 
     public void setBirthday(DateTime birthday) {
         mBirthday = birthday;
+    }
+
+    public String getEmail() {
+        return mEmail;
+    }
+
+    public void setEmail(String email) {
+        mEmail = email;
     }
 }
