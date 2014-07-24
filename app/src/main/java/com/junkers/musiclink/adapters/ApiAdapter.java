@@ -1,5 +1,6 @@
 package com.junkers.musiclink.adapters;
 
+import com.junkers.musiclink.models.Song;
 import com.junkers.musiclink.models.User;
 
 import retrofit.Callback;
@@ -14,4 +15,7 @@ public interface ApiAdapter {
 
     @POST("/users")
     void createUser(@Body User user, Callback<User> callback);
+
+    @POST("/songs/save_play")
+    void saveSongPlay(@Body Song song, Callback<?> callback);
 }
